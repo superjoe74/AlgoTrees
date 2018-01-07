@@ -1,7 +1,5 @@
 package algTree;
 
-import algTree.RBTree.Node;
-
 public class RBTree<D> {
 	class Node {
 		public Node(String key, D data) {
@@ -22,6 +20,8 @@ public class RBTree<D> {
 			m_Right.m_bIsRed = false;
 			m_bIsRed = true;
 		}
+
+		
 
 		String m_Key;
 		D m_Data;
@@ -214,4 +214,8 @@ public class RBTree<D> {
 	}
 
 	private Node m_Root = null;
+
+	public Node getRoot() {
+		return m_Root;
+	}
 }
