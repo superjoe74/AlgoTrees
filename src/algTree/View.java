@@ -183,10 +183,10 @@ public class View extends JFrame {
 	}
 
 	private void name() {
-		ttf = new TreeToFile(m_Mod.getM_PT());
+		ttf = new PTToFile(m_Mod.getM_PT());
 	}
 
-	private TreeToFile ttf;
+	private PTToFile ttf;
 	private Model m_Mod;
 	private DefaultListModel<String> m_NodeList;
 }
