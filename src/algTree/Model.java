@@ -31,8 +31,10 @@ public class Model {
 	}
 
 	public void remove(String selectedValue) {
-		if (m_TreeType == TreeType.RBTree) {
+		if (m_TreeType.equals(TreeType.RBTree)) {
 			m_RBT.remove(selectedValue);
+		}else if (m_TreeType.equals(TreeType.PatriciaTree)) {
+			m_PT.remove(selectedValue);
 		}
 	}
 

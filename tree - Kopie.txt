@@ -1,19 +1,23 @@
 [
-l("b",n("",[a("OBJECT","b")],
-[
-l("ba",e("",[a("EDGECOLOR","red")],
-l("a",n("",[a("OBJECT","a")],[])))),
-l("bd",e("",[a("EDGECOLOR","red")],
-l("d",n("",[a("OBJECT","d")],
-[
-l("dc",e("",[a("EDGECOLOR","red")],
-l("c",n("",[a("OBJECT","c")],[])))),
-l("de",e("",[a("EDGECOLOR","red")],
-l("e",n("",[a("OBJECT","e")],
-[
-l("ef",e("",[a("EDGECOLOR","red")],
-l("f",n("",[a("OBJECT","f")],[]))))
-]))))
-]))))
-]))
-]
+l("f",n("",[a("OBJECT","f")],
+	[
+	l("fh",e("",[a("EDGECOLOR","black")],
+	l("h",n("",[a("OBJECT","h")],
+		[
+			l("hh",e("",[a("EDGECOLOR","black")],
+			r("h"))),
+			l("hb",e("",[a("EDGECOLOR","black")],
+			l("b",n("",[a("OBJECT","b")],
+				[
+				l("bj",e("",[a("EDGECOLOR","black")],
+				l("j",n("",[a("OBJECT","j")],
+					[
+					l("jb",e("",[a("EDGECOLOR","black")],
+					r("b"))),
+					l("jj",e("",[a("EDGECOLOR","black")],
+					r("j")))])))),
+				l("bf",e("",[a("EDGECOLOR","black")],
+				r("f")))]
+			))))]
+		))))]
+	))]

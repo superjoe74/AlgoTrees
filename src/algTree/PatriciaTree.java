@@ -38,7 +38,7 @@ public class PatriciaTree {
 	public boolean search(String c) {
 		NodeHandler h = new NodeHandler(m_Root);
 		h.search(c);
-		return !h.isNull() && h.node(h.NODE).m_Key == c;
+		return !h.isNull() && h.node(h.NODE).m_Key.equals(c);
 	}
 
 	public boolean insert(String c) {
@@ -52,7 +52,7 @@ public class PatriciaTree {
 				if (index == h.node(h.DAD).m_BitPos)
 					++index;
 			}
-		} else if (h.node(h.NODE).m_Key != c) {
+		} else if (!h.node(h.NODE).m_Key.equals(c)) {
 			while (left(c, index) == left(h.node(h.NODE).m_Key, index))
 				++index;
 		} else {
@@ -68,7 +68,7 @@ public class PatriciaTree {
 	boolean remove(String c) {
 		NodeHandler h = new NodeHandler(m_Root);
 		h.search(c);
-		if (h.isNull() || h.node(h.NODE).m_Key != c) {
+		if (!(h.isNull() || h.node(h.NODE).m_Key.equals(c))) {
 			return false;
 		} else {
 			NodeHandler h2 = new NodeHandler(h.node(h.DAD));
