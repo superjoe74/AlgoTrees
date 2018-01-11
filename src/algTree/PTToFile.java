@@ -10,7 +10,10 @@ public class PTToFile {
 	public PTToFile(PatriciaTree tree) {
 		try {
 			// System.out.println(leaf.m_Key);
-			startWriting(tree.getRoot());
+			// deepestLeaf(tree.getRoot(), 0);
+			// System.out.println(leaf.m_Key);
+			root = tree.getRoot();
+			startWriting(root);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -27,8 +30,8 @@ public class PTToFile {
 		f.close();
 	}
 
-	private void writeChild(FileWriter f, Node from, Node to, String s) throws IOException {
-		printEdge(f, from, to);
+	private void writeChild(FileWriter f, Node from, Node to, String s, boolean b) throws IOException {
+		printEdge(f, from, to, b);
 		printNode(f, to);
 		f.write(s);
 		writeChildren(f, to);
@@ -37,30 +40,29 @@ public class PTToFile {
 	private void writeChildren(FileWriter f, Node node) throws IOException {
 		boolean b = false;
 		if (node.m_Left != null || node.m_Right != null) {
-			f.write("\n[");
 			if (node.m_Left != null) {
 				if (node.m_Right != null) {
 					if (node.m_BitPos >= node.m_Left.m_BitPos) {
-						printRefNode(f, node, node.m_Left, ")))])))),");
+						printRefNode(f, node, node.m_Left, "))", true);
 						b = true;
 					} else {
-						writeChild(f, node, node.m_Left, "");
-						if (node.m_BitPos >= node.m_Left.m_BitPos) {
-							printRefNode(f, node, node.m_Left, ")))])))),");
-							b = true;
-						} else {
-							writeChild(f, node, node.m_Right, "");
-						}
+						writeChild(f, node, node.m_Left, "", true);
+					}
+					if (node.m_BitPos >= node.m_Right.m_BitPos) {
+						printRefNode(f, node, node.m_Right, "))]", false);
+						b = true;
+					} else {
+						writeChild(f, node, node.m_Right, "", false);
 					}
 					if (!b) {
 						f.write("))))]");
 					}
 				} else {
 					if (node.m_BitPos >= node.m_Left.m_BitPos) {
-						printRefNode(f, node, node.m_Left, ")))])))),");
+						printRefNode(f, node, node.m_Left, "))]", true);
 						b = true;
 					} else {
-						writeChild(f, node, node.m_Left, "");
+						writeChild(f, node, node.m_Left, "", true);
 					}
 					if (!b) {
 						f.write("))]");
@@ -69,10 +71,10 @@ public class PTToFile {
 			} else {
 				if (node.m_Right != null) {
 					if (node.m_BitPos >= node.m_Right.m_BitPos) {
-						printRefNode(f, node, node.m_Right, ")))])))),");
+						printRefNode(f, node, node.m_Right, ")))]", true);
 						b = true;
 					} else {
-						writeChild(f, node, node.m_Right, "");
+						writeChild(f, node, node.m_Right, "", true);
 					}
 					if (!b) {
 						f.write("))]");
@@ -80,51 +82,61 @@ public class PTToFile {
 				}
 			}
 		}
+
 	}
 
 	private void printNode(FileWriter f, Node node) {
 		try {
-			f.write("\nl(\"" + node.m_Key + "\",n(\"\",[a(\"OBJECT\",\"" + node.m_Key + "\")],");
+			if (node.equals(root)) {
+				f.write("\nl(\"" + node.m_Key + "\",n(\"\",[a(\"OBJECT\",\"" + node.m_Key + "\")]");
+			} else {
+				f.write(",\nl(\"" + node.m_Key + "\",n(\"\",[a(\"OBJECT\",\"" + node.m_Key + "\")]");
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void printEdge(FileWriter f, Node from, Node to) {
+	private void printEdge(FileWriter f, Node from, Node to, boolean b) {
 		try {
-			f.write("\nl(\"" + from.m_Key + to.m_Key + "\",e(\"\",[a(\"EDGECOLOR\",\"black\")],");
+			if (b) {
+				f.write(",\n[\nl(\"" + from.m_Key + to.m_Key + "\",e(\"\",[a(\"EDGECOLOR\",\"black\")]");
+			} else {
+				f.write(",\nl(\"" + from.m_Key + to.m_Key + "\",e(\"\",[a(\"EDGECOLOR\",\"black\")]");
+			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void printRefNode(FileWriter f, Node from, Node to, String s) {
+	private void printRefNode(FileWriter f, Node from, Node to, String s, boolean b) {
 		try {
-			printEdge(f, from, to);
-			f.write("\nr(\"" + to.m_Key + "\"" + s);
+			printEdge(f, from, to, b);
+			f.write(",\nr(\"" + to.m_Key + "\")" + s);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void deepestLeaf(Node node, int lvl) {
-		if ((node.m_Left == null || node.m_Left.m_BitPos <= node.m_BitPos)
-				&& (node.m_Right == null || node.m_Right.m_BitPos <= node.m_BitPos) && lvl >= level) {
-			leaf = node;
-			level = lvl;
-		}
-		if (node.m_Left != null && (node.m_Left.m_BitPos > node.m_BitPos)) {
-			deepestLeaf(node.m_Left, lvl + 1);
-		}
-		if (node.m_Right != null && (node.m_Right.m_BitPos > node.m_BitPos)) {
-			deepestLeaf(node.m_Right, lvl + 1);
-		}
-	}
+//	private void deepestLeaf(Node node, int lvl) {
+//		if ((node.m_Left.m_BitPos <= node.m_BitPos) || (node.m_Right.m_BitPos <= node.m_BitPos) && lvl >= level) {
+//			leaf = node;
+//			level = lvl;
+//		}
+//		if ((node.m_Right != null) && (node.m_Right.m_BitPos > node.m_BitPos)) {
+//			deepestLeaf(node.m_Right, lvl + 1);
+//		}
+//		if ((node.m_Left != null) && (node.m_Left.m_BitPos > node.m_BitPos)) {
+//			deepestLeaf(node.m_Left, lvl + 1);
+//		}
+//	}
 
-	private Node leaf;
-	private int level;
+	private Node root;
+//	private Node leaf;
+//	private int level;
 
 }
