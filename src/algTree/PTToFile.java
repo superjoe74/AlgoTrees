@@ -49,7 +49,7 @@ public class PTToFile {
 						writeChild(f, node, node.m_Left, "", true);
 					}
 					if (node.m_BitPos >= node.m_Right.m_BitPos) {
-						printRefNode(f, node, node.m_Right, "))]", false);
+						printRefNode(f, node, node.m_Right, "))]))))", false);
 						b = true;
 					} else {
 						writeChild(f, node, node.m_Right, "", false);

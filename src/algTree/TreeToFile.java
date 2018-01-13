@@ -3,17 +3,17 @@ package algTree;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import algTree.PatriciaTree.Node;
+import algTree.RBTree.Node;
 
 
 public class TreeToFile {
 	private int level;
 	private Node leaf;
-	public TreeToFile(PatriciaTree tree) {
+	public TreeToFile(RBTree rbTree) {
 		try {
-			deepestLeaf(tree.getRoot(), 0);
+			deepestLeaf(rbTree.getRoot(), 0);
 			System.out.println(leaf.m_Key);
-			startWriting(tree.getRoot());
+			startWriting(rbTree.getRoot());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,9 +37,9 @@ public class TreeToFile {
 					f.write("))))]");
 				} else {
 					if (root.m_Left == leaf) {
-						writeChild(f, root, root.m_Left, "))");
-					}else {
 						writeChild(f, root, root.m_Left, "[]))");
+					}else {
+						writeChild(f, root, root.m_Left, "))");
 					}
 					f.write("))]");
 				}
@@ -76,9 +76,9 @@ public class TreeToFile {
 					f.write("))))]");
 				} else {
 					if (to.m_Left == leaf) {
-						writeChild(f, to, to.m_Left, "))");
-					}else {
 						writeChild(f, to, to.m_Left, "[]))");
+					}else {
+						writeChild(f, to, to.m_Left, "))");
 					}
 					f.write("))]");
 				}
@@ -108,11 +108,11 @@ public class TreeToFile {
 
 	private void printEdge(FileWriter f, Node from, Node to) {
 		try {
-//			String col = "black";
-//			if (to.m_bIsRed) {
-//				col = "red";
-//			}
-			f.write("\nl(\"" + from.m_Key + to.m_Key + "\",e(\"\",[a(\"EDGECOLOR\",\""+"black"+"\")],");
+			String col = "black";
+			if (to.m_bIsRed) {
+				col = "red";
+			}
+			f.write("\nl(\"" + from.m_Key + to.m_Key + "\",e(\"\",[a(\"EDGECOLOR\",\""+col+"\")],");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

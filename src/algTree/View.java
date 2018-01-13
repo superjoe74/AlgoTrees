@@ -3,6 +3,7 @@ package algTree;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.io.IOException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -84,7 +85,7 @@ public class View extends JFrame {
 		});
 		JButton writeButton = new JButton("write");
 		writeButton.addActionListener(e -> {
-			name();
+			writeFile();
 		});
 
 		keyField.getDocument().addDocumentListener(new DocumentListener() {
@@ -177,11 +178,22 @@ public class View extends JFrame {
 		setVisible(true);
 	}
 
-	private void name() {
-		ttf = new PTToFile(m_Mod.getM_PT());
+	private void writeFile() {
+		if (m_Mod.getTreeType().equals(TreeType.RBTree)) {
+			TreeToFile ttf = new TreeToFile(m_Mod.getM_RBT());
+		}else if (m_Mod.getTreeType().equals(TreeType.PatriciaTree)) {
+			PTToFile ttf = new PTToFile(m_Mod.getM_PT());
+		}
+		pBuilder = new ProcessBuilder("C:\\Program Files (x86)\\uDraw(Graph)\\bin\\uDrawGraph.exe", "tree.txt");
+		try {
+			pBuilder.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	private PTToFile ttf;
 	private Model m_Mod;
 	private DefaultListModel<String> m_NodeList;
+	private ProcessBuilder pBuilder;
 }
