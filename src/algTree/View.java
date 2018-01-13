@@ -23,12 +23,7 @@ import algTree.Model.TreeType;
 public class View extends JFrame {
 	public View(Model m) {
 		m_Mod = m;
-		Object[] options = { TreeType.RBTree, TreeType.PatriciaTree, TreeType.RoBDD };
-
-		int selected = JOptionPane.showOptionDialog(null, "Choose a tree:", "Trees", JOptionPane.DEFAULT_OPTION,
-				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-		m_Mod.setTreeType((TreeType) options[selected]);
-		System.out.println(m_Mod.getTreeType());
+		
 
 		setLayout(new BorderLayout());
 

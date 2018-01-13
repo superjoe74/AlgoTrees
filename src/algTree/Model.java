@@ -12,7 +12,7 @@ public class Model {
 		} else if (m_TreeType == TreeType.RBTree) {
 			m_RBT = new RBTree();
 		} else {
-			m_Ro = new RoBDD();
+			
 		}
 	}
 
@@ -27,6 +27,8 @@ public class Model {
 				m_PT = new PatriciaTree();
 			}
 			m_PT.insert(key);
+		}else {
+			BoolExpr expr = new BoolExpr(key);
 		}
 	}
 

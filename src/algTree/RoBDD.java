@@ -3,7 +3,7 @@ package algTree;
 import java.util.Hashtable;
 
 public class RoBDD {
-	private static final class Func {
+	public static final class Func {
 		private static final int TRUE = 0x7fffffff;
 		private static final int FALSE = TRUE - 1;
 		private final int m_ciVar;
@@ -72,15 +72,17 @@ public class RoBDD {
 	private final Func m_cTrue;
 	private final Func m_cFalse;
 	private Hashtable<String, Integer> m_Integers;
-	private Hashtable<Integer, Triple> m_Triples;
+	private Hashtable<Integer, String> m_Strings;
 	private Hashtable<Triple, Func> m_Unique;
 	private int m_Entries;
+	Func m_lastFunc;
+	
 
 	RoBDD() {
 		m_cTrue = new Func(true);
 		m_cFalse = new Func(false);
 		m_Integers = new Hashtable<String, Integer>();
-		m_Triples = new Hashtable<Integer, Triple>();
+		m_Strings = new Hashtable<Integer, String>();
 		m_Unique = new Hashtable<Triple, Func>();
 	}
 
@@ -89,15 +91,13 @@ public class RoBDD {
 		if (i == null) {
 			i = ++m_Entries;
 			m_Integers.put(s, i);
+			m_Strings.put(i, s);
 		}
-		Triple entry = m_Triples.get(i);
-		if (entry == null) {
-			entry = new Triple(i, genTrue(), genFalse());
-			m_Triples.put(i, entry);
-		}
+		Triple entry = new Triple(i, genTrue(), genFalse());
 		Func res = m_Unique.get(entry);
 		if (res == null) {
 			res = new Func(i, genTrue(), genFalse());
+			m_lastFunc = res;
 			m_Unique.put(entry, res);
 		}
 		return res;
@@ -128,9 +128,19 @@ public class RoBDD {
 			Func res = m_Unique.get(entry);
 			if (res == null) {
 				res = new Func(ciVar, T, E);
+				m_lastFunc = res;
 				m_Unique.put(entry, res);
 			}
 			return res;
+		}
+	}
+	void print(Func f) {
+		System.out.println(m_Strings.get(f.m_ciVar));
+		if (f.m_cThen != null) {
+			print(f.m_cThen);
+		}
+		if (f.m_cElse != null) {
+			print(f.m_cElse);
 		}
 	}
 }

@@ -59,7 +59,7 @@ public class PTToFile {
 					}
 				} else {
 					if (node.m_BitPos >= node.m_Left.m_BitPos) {
-						printRefNode(f, node, node.m_Left, "))]", true);
+						printRefNode(f, node, node.m_Left, "))]))))", true);
 						b = true;
 					} else {
 						writeChild(f, node, node.m_Left, "", true);
@@ -71,7 +71,7 @@ public class PTToFile {
 			} else {
 				if (node.m_Right != null) {
 					if (node.m_BitPos >= node.m_Right.m_BitPos) {
-						printRefNode(f, node, node.m_Right, ")))]", true);
+						printRefNode(f, node, node.m_Right, "))]))))", true);
 						b = true;
 					} else {
 						writeChild(f, node, node.m_Right, "", true);
